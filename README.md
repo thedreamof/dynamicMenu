@@ -2,6 +2,12 @@
 
 This page work with a dynamic menu that is in a file service (.json)
 
+## Additional settings used
+* Prettier and Eslint
+* Typescript
+* Sass
+* Bulma
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
