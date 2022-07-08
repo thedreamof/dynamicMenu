@@ -1,6 +1,7 @@
 <template>
     <nav class="novo-navbar">
-        <ul class="menu is-flex" v-for="menu in menuList" :key="menu">
+        <div class="loading" v-if="loading">Loading...</div>
+        <ul v-else class="menu is-flex" v-for="menu in menuList" :key="menu">
             <li class="menu-item" v-for="items in menu" :key="items">
                 <a>{{items.name}}</a>
                 <ul class="menu" v-if="items.subMenu.length">
@@ -30,11 +31,14 @@ import { ref } from 'vue';
 
 // --- VARIABLES
 const menuList = ref<Array<any>>([]);
+const loading = ref(true);
 
 // --- FUNCTIONS
 const buildMenu = async () => {
+    loading.value = true;
     const res: any = await api.getMenu();
     menuList.value = buildSubMenu(res.lista);
+    loading.value = false;
 };
 
 const buildSubMenu = (list: Array<any>) => {
@@ -60,6 +64,10 @@ buildMenu();
 </script>
 
 <style lang="scss" scoped>
+
+.loading {
+    padding: 10px;
+}
 .novo-navbar {
     margin: 0px 10px;
     text-transform: capitalize;
