@@ -11,6 +11,6 @@ module.exports = {
   ],
   rules: {
     // ...
-    'prettier/prettier': ['warn', { singleQuote: true }],
+    'prettier/prettier': ['off', { singleQuote: true }],
   },
 };

@@ -1,23 +1,12 @@
 <template>
-  <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="./assets/logo.svg"
-      width="125"
-      height="125"
-    />
-  </header>
-
-  <main>
-    <h1>Start</h1>
-  </main>
+  <MainLayout />
 </template>
 
 <script setup lang="ts">
-console.log('TEst');
+import MainLayout from './layout/MainLayout.vue';
 </script>
 
-<style>
+<style lang="scss">
+@import 'bulma/css/bulma.css';
 @import './assets/base.css';
 </style>

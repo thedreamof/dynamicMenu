@@ -1,13 +1,13 @@
 # Menu Novo
 
-This page work with a dynamic menu that found in a file service
+This page work with a dynamic menu that is in a file service (.json)
 
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
 
-## Project Setup
+## Project Setup initialized
 
 ```sh
 npm install
