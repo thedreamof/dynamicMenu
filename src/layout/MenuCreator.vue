@@ -1,16 +1,10 @@
 <template>
-    <!-- <ul class="menu is-flex" v-for="items in menu" :key="items"> -->
-    <li class="menu-item" v-for="items in menu" :key="items">
-        <a>{{ items.name }}</a>
-
-        <template v-if="items.subMenu">
-            <ul class="menu" v-for="item in items.subMenu" :key="item">
-                <li class="menu-item">{{item.name}}</li>
-                <MenuCreator :menu="item" />
-            </ul>
-        </template>
-    </li>
-    <!-- </ul> -->
+    <ul v-bind="$attrs">
+        <li class="menu-item" v-for="items in menu" :key="items">
+            <a>{{ items.name }}</a>
+            <MenuCreator class="sub-menu" v-if="items.subMenu.length" :menu="items.subMenu"/>
+        </li>
+    </ul>
 </template>
 
 <script setup lang="ts">
@@ -26,37 +20,62 @@ console.log('menu :>> ', props.menu);
     position: relative;
 }
 
-.menu .menu-item a {
-    background: white;
-    color: black;
-    padding: 10px;
-    display: block;
+.menu,
+.sub-menu {
+    .menu-item {
+        background: white;
+        padding: 10px;
+        cursor: pointer;
+
+        a {
+            display: block;
+            color: black;
+            text-transform: capitalize;
+        }
+
+        &>.sub-menu {
+            display: none;
+        }
+
+        &:hover {
+            border-bottom: 2px solid darkblue;
+            position: relative;
+
+            &>a {
+                color: darkblue;
+            }
+
+            &>.sub-menu {
+                display: block;
+                width: 100%;
+                min-width: 200px;
+                position: absolute;
+                top: 52px;
+                left: 0;
+            }
+        }
+    }
+}
+
+
+.sub-menu .menu-item {
+    border: 1px solid darkgray;
+
+    a {
+        color: gray;
+    }
 
     &:hover {
-        // border-bottom: 2px solid darkblue;
-        box-shadow: inset 0 -3px 0 0 darkblue;
+        border-bottom: 1px solid darkgray;
+
+        a {
+            color: darkblue;
+        }
+
+        &>.sub-menu {
+            top: 0;
+            left: 200px;
+        }
     }
 }
-
-
-.menu .menu-item .menu {
-    display: none;
-    position: absolute;
-    // top: 50px;
-    width: 100%;
-    max-width: 200px;
-}
-
-.menu .menu-item {
-    &:hover>.menu {
-        display: block;
-    }
-}
-
-// .menu-item {
-//     background: red;
-//     &:hover>.menu {
-//         display: block;
-//     }
-// }
 </style>
