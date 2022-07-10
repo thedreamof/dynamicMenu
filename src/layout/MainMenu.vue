@@ -1,22 +1,22 @@
 <template>
-    <nav class="novo-navbar">
+    <nav class="navbar">
         <div class="loading" v-if="loading">Loading...</div>
         <ul v-else class="menu is-flex" v-for="menu in menuList" :key="menu">
             <li class="menu-item" v-for="items in menu" :key="items">
-                <a>{{items.name}}</a>
-                <ul class="menu" v-if="items.subMenu.length">
+                <a>{{ items.name }}</a>
+                <ul class="sub-menu" v-if="items.subMenu.length">
                     <li class="menu-item" v-for="item in items.subMenu" :key="item">
-                        <a>{{item.name}}</a>
-                        <ul class="menu" v-if="item.subMenu.length">
+                        <a>{{ item.name }}</a>
+                        <ul class="sub-menu" v-if="item.subMenu.length">
                             <li class="menu-item" v-for="ite in item.subMenu" :key="ite">
-                                <a>{{ite.name}}</a>
+                                <a>{{ ite.name }}</a>
                             </li>
                         </ul>
                     </li>
                 </ul>
             </li>
         </ul>
-  
+
         <!-- <ul class="menu is-flex" v-for="menu in menuList" :key="menu">
             <MenuCreator v-if="menu" :menu="menu" />
         </ul> -->
@@ -41,14 +41,13 @@ const buildMenu = async () => {
     loading.value = false;
 };
 
-const buildSubMenu = (list: Array<any>) => {
-    const menuList = list.map((data) => {
-        const items = Object.keys(data);
-        const subMenu: any = items.map(element => {
-            const menu = data[element].length ? buildSubMenu(data[element]) : [];
+const buildSubMenu = (menu: Array<any>) => {
+    const menuList = menu.map((menuItem) => {
+        const menuNames = Object.keys(menuItem);
+        const subMenu: Array<any> = menuNames.map(name => {
             const itemMenu = {
-                name: element.replace('_', ' '),
-                subMenu: menu.length ? menu[0] : []
+                name: name.replace('_', ' '),
+                subMenu: buildSubMenu(menuItem[name]).flat() || [],
             }
             return itemMenu;
         });
@@ -64,10 +63,10 @@ buildMenu();
 </script>
 
 <style lang="scss" scoped>
-
 .loading {
     padding: 10px;
 }
+
 .novo-navbar {
     margin: 0px 10px;
     text-transform: capitalize;
@@ -78,30 +77,62 @@ buildMenu();
     position: relative;
 }
 
-.menu .menu-item a {
-    background: white;
-    color: black;
-    padding: 10px;
-    display: block;
+.menu,
+.sub-menu {
+    .menu-item {
+        background: white;
+        padding: 10px;
+        cursor: pointer;
 
-    &:hover {
-        // border-bottom: 2px solid darkblue;
-        box-shadow: inset 0 -3px 0 0 darkblue;
+        a {
+            display: block;
+            color: black;
+            text-transform: capitalize;
+        }
+
+        &>.sub-menu {
+            display: none;
+        }
+
+        &:hover {
+            border-bottom: 2px solid darkblue;
+            position: relative;
+
+            &>a {
+                color: darkblue;
+            }
+
+            &>.sub-menu {
+                display: block;
+                width: 100%;
+                min-width: 200px;
+                position: absolute;
+                top: 52px;
+                left: 0;
+            }
+        }
     }
 }
 
 
-.menu .menu-item .menu {
-    display: none;
-    position: absolute;
-    // top: 50px;
-    width: 100%;
-    max-width: 200px;
-}
+.sub-menu .menu-item {
+    border: 1px solid darkgray;
 
-.menu .menu-item {
-    &:hover>.menu {
-        display: block;
+    a {
+        color: gray;
+    }
+
+    &:hover {
+        border-bottom: 1px solid darkgray;
+
+        a {
+            color: darkblue;
+        }
+
+        &>.sub-menu {
+            top: 0;
+            left: 200px;
+        }
     }
 }
 </style>
